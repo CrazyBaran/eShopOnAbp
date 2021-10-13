@@ -12,11 +12,7 @@ namespace EShopOnAbp.CatalogService.EntityConfigurations
         {
             builder.ToTable("CatalogBrand");
 
-            builder.HasKey(ci => ci.Id);
-
-            builder.Property(ci => ci.Id)
-                .UseHiLo("catalog_brand_hilo")
-                .IsRequired();
+            builder.HasKey(cb => cb.Id);
 
             builder.Property(cb => cb.Brand)
                 .IsRequired()

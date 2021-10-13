@@ -1,6 +1,7 @@
 ﻿using Shouldly;
 using System.Threading.Tasks;
-using Volo.Abp.Identity;
+using EShopOnAbp.CatalogService.Catalogs;
+using Volo.Abp.Application.Dtos;
 using Xunit;
 
 namespace EShopOnAbp.CatalogService.Samples
@@ -12,22 +13,22 @@ namespace EShopOnAbp.CatalogService.Samples
      */
     public class SampleAppServiceTests : CatalogServiceApplicationTestBase
     {
-        private readonly IIdentityUserAppService _userAppService;
+        private readonly ICatalogAppService _catalogAppService;
 
         public SampleAppServiceTests()
         {
-            _userAppService = GetRequiredService<IIdentityUserAppService>();
+            _catalogAppService = GetRequiredService<ICatalogAppService>();
         }
 
         [Fact]
-        public async Task Initial_Data_Should_Contain_Admin_User()
+        public async Task Initial_Data_Should_Contain_FakeItemA_Catalog_Item()
         {
             //Act
-            var result = await _userAppService.GetListAsync(new GetIdentityUsersInput());
+            var result = await _catalogAppService.GetListAsync(new PagedAndSortedResultRequestDto());
 
             //Assert
             result.TotalCount.ShouldBeGreaterThan(0);
-            result.Items.ShouldContain(u => u.UserName == "admin");
+            result.Items.ShouldContain(c => c.Name == "fakeItemA");
         }
     }
 }
