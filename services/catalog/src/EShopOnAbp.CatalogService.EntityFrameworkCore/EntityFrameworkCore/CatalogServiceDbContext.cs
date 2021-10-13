@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EShopOnAbp.CatalogService.Catalogs;
+using EShopOnAbp.CatalogService.EntityConfigurations;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -8,8 +10,10 @@ namespace EShopOnAbp.CatalogService.EntityFrameworkCore
     public class CatalogServiceDbContext :
         AbpDbContext<CatalogServiceDbContext>
     {
-        /* Add DbSet properties for your Aggregate Roots / Entities here. */
-
+        public DbSet<CatalogItem> CatalogItems { get; set; }
+        public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogType> CatalogTypes { get; set; }
+        
         public CatalogServiceDbContext(DbContextOptions<CatalogServiceDbContext> options)
             : base(options)
         {
@@ -18,7 +22,11 @@ namespace EShopOnAbp.CatalogService.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+            
+            builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
+            
             /* Include modules to your migration db context */
 
             /* Configure your own tables/entities inside here */

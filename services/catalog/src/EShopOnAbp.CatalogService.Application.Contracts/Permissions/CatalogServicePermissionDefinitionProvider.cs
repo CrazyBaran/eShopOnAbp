@@ -9,6 +9,9 @@ namespace EShopOnAbp.CatalogService.Permissions
         public override void Define(IPermissionDefinitionContext context)
         {
             var myGroup = context.AddGroup(CatalogServicePermissions.GroupName);
+
+            var catalogsPermission =
+                myGroup.AddPermission(CatalogServicePermissions.Catalogs.Default, L("Permission:Catalogs"));
             //Define your own permissions here. Example:
             //myGroup.AddPermission(CatalogServicePermissions.MyPermission1, L("Permission:MyPermission1"));
         }
