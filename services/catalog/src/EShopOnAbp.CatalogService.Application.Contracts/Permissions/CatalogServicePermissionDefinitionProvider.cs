@@ -11,7 +11,13 @@ namespace EShopOnAbp.CatalogService.Permissions
             var myGroup = context.AddGroup(CatalogServicePermissions.GroupName);
 
             var catalogsPermission =
-                myGroup.AddPermission(CatalogServicePermissions.Catalogs.Default, L("Permission:Catalogs"));
+                myGroup.AddPermission(CatalogServicePermissions.CatalogItems.Default, L("Permission:CatalogItems"));
+            catalogsPermission.AddChild(CatalogServicePermissions.CatalogItems.Create,
+                L("Permission:CatalogItems.Create"));
+            catalogsPermission.AddChild(CatalogServicePermissions.CatalogItems.Edit,
+                L("Permission:CatalogItems.Edit"));
+            catalogsPermission.AddChild(CatalogServicePermissions.CatalogItems.Delete,
+                L("Permission:CatalogItems.Delete"));
             //Define your own permissions here. Example:
             //myGroup.AddPermission(CatalogServicePermissions.MyPermission1, L("Permission:MyPermission1"));
         }
