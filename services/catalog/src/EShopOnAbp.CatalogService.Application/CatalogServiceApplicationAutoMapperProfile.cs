@@ -12,6 +12,8 @@ namespace EShopOnAbp.CatalogService
              * into multiple profile classes for a better organization. */
 
             CreateMap<CatalogItem, CatalogItemDto>();
+            CreateMap<CatalogType, CatalogTypeDto>();
+            CreateMap<CatalogBrand, CatalogBrandDto>();
         }
     }
 }
