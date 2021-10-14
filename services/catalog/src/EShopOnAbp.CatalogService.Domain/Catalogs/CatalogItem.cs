@@ -1,4 +1,5 @@
 using System;
+using EShopOnAbp.CatalogService.Events;
 using EShopOnAbp.CatalogService.Exceptions;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
@@ -13,7 +14,7 @@ namespace EShopOnAbp.CatalogService.Catalogs
 
         public string Description { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal Price { get; private set; }
 
         public string PictureFileName { get; set; }
 
@@ -41,6 +42,12 @@ namespace EShopOnAbp.CatalogService.Catalogs
         /// True if item is on reorder
         /// </summary>
         public bool OnReorder { get; set; }
+
+        public CatalogItem(Guid? tenantId, decimal price)
+        {
+            TenantId = tenantId;
+            Price = price;
+        }
         
         /// <summary>
         /// Decrements the quantity of a particular item in inventory and ensures the restockThreshold hasn't
@@ -97,6 +104,15 @@ namespace EShopOnAbp.CatalogService.Catalogs
             this.OnReorder = false;
 
             return this.AvailableStock - original;
+        }
+
+        public void ChangePrice(decimal newPrice)
+        {
+            if (Price != newPrice)
+            {
+                AddDistributedEvent(new ProductPriceChangedIntegrationEvent(Id, newPrice, Price));
+            }
+            Price = newPrice;
         }
     }
 }

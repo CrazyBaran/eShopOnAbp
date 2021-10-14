@@ -1,7 +1,9 @@
-﻿using Shouldly;
+﻿using System;
+using Shouldly;
 using System.Threading.Tasks;
 using EShopOnAbp.CatalogService.Catalogs;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.MultiTenancy;
 using Xunit;
 
 namespace EShopOnAbp.CatalogService.Samples
@@ -14,21 +16,30 @@ namespace EShopOnAbp.CatalogService.Samples
     public class SampleAppServiceTests : CatalogServiceApplicationTestBase
     {
         private readonly ICatalogAppService _catalogAppService;
+        private readonly ICurrentTenant _currentTenant;
 
         public SampleAppServiceTests()
         {
             _catalogAppService = GetRequiredService<ICatalogAppService>();
+            _currentTenant = GetRequiredService<ICurrentTenant>();
         }
 
         [Fact]
         public async Task Initial_Data_Should_Contain_FakeItemA_Catalog_Item()
         {
-            //Act
+            // Arrange
+            var currentTenantId = _currentTenant.Id;
+            _currentTenant.Change(Guid.Empty);
+            
+            // Act
             var result = await _catalogAppService.GetListAsync(new PagedAndSortedResultRequestDto());
 
-            //Assert
+            // Assert
             result.TotalCount.ShouldBeGreaterThan(0);
             result.Items.ShouldContain(c => c.Name == "fakeItemA");
+
+            // Teardown
+            _currentTenant.Change(currentTenantId);
         }
     }
 }

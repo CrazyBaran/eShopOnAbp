@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EShopOnAbp.CatalogService.Catalogs;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -27,42 +28,42 @@ namespace EShopOnAbp.CatalogService
             };
             await _catalogRepository.InsertManyAsync(new[]
             {
-                new CatalogItem()
+                new CatalogItem(tenantId: Guid.Empty, price: 0.001m)
                 {
                     Name = "fakeItemA",
                     CatalogType = catalogType,
                     CatalogBrand = catalogBrand,
                     PictureFileName = "fakeItemA.png"
                 },
-                new CatalogItem()
+                new CatalogItem(tenantId: Guid.Empty, price: 0.001m)
                 {
                     Name = "fakeItemB",
                     CatalogType = catalogType,
                     CatalogBrand = catalogBrand,
                     PictureFileName = "fakeItemB.png"
                 },
-                new CatalogItem()
+                new CatalogItem(tenantId: Guid.Empty, price: 0.001m)
                 {
                     Name = "fakeItemC",
                     CatalogType = catalogType,
                     CatalogBrand = catalogBrand,
                     PictureFileName = "fakeItemC.png"
                 },
-                new CatalogItem()
+                new CatalogItem(tenantId: Guid.Empty, price: 0.001m)
                 {
                     Name = "fakeItemD",
                     CatalogType = catalogType,
                     CatalogBrand = catalogBrand,
                     PictureFileName = "fakeItemD.png"
                 },
-                new CatalogItem()
+                new CatalogItem(tenantId: Guid.Empty, price: 0.001m)
                 {
                     Name = "fakeItemE",
                     CatalogType = catalogType,
                     CatalogBrand = catalogBrand,
                     PictureFileName = "fakeItemE.png"
                 },
-                new CatalogItem()
+                new CatalogItem(tenantId: Guid.Empty, price: 0.001m)
                 {
                     Name = "fakeItemF",
                     CatalogType = catalogType,

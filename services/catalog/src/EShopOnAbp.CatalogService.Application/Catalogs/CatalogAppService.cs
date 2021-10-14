@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.EventBus.Distributed;
 
 namespace EShopOnAbp.CatalogService.Catalogs
 {
@@ -12,7 +13,8 @@ namespace EShopOnAbp.CatalogService.Catalogs
             CatalogItem, 
             CatalogItemDto, 
             int, 
-            PagedAndSortedResultRequestDto>, 
+            PagedAndSortedResultRequestDto, 
+            CreateOrUpdateCatalogItemDto>, 
         ICatalogAppService
     {
         public CatalogAppService(IRepository<CatalogItem, int> repository) : base(repository)
